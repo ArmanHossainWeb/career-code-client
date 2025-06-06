@@ -26,10 +26,7 @@ const Login = () => {
         console.log(errorCode, errorMessage);
       });
 
-    //   login with google
-    const handleGoogleLogin = () => {
-      console.log("google login successfully ");
-    };
+    
   };
   return (
     <div>
@@ -76,7 +73,7 @@ const Login = () => {
               </form>
               <p className="text-center">Or</p>
               <button
-                onClick={handleGoogleLogin}
+                
                 className="btn btn-white mt-4"
               >
                 <FcGoogle /> login with google
