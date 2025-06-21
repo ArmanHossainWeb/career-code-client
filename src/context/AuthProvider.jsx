@@ -1,12 +1,13 @@
-import React, { Children, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
-import { TbUrgent } from 'react-icons/tb';
+
 
 const AuthProvider = ({children }) => {
     const [loading,setLoading]= useState(true)
     const[user, setUser]=useState(null)
+    const provider = new GoogleAuthProvider();
 
     // create user 
     const createUser = (email, password) => {
@@ -17,6 +18,11 @@ const AuthProvider = ({children }) => {
     const loginUser = (email, password) => {
         setLoading(true)
       return signInWithEmailAndPassword(auth, email, password)
+    }
+    // login with google 
+    const LoginWithGoogle = () => {
+      setLoading(true)
+      signInWithPopup(auth,provider)
     }
 
     // LogOut user 
@@ -41,6 +47,7 @@ const AuthProvider = ({children }) => {
         createUser,
         user,
         loading,
+        LoginWithGoogle,
         loginUser,
         logoutUser
     }

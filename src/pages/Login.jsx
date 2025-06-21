@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
 import LottiesLogin from "../assets/lotties/login.json";
 import Lottie from "lottie-react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { FcGoogle } from "react-icons/fc";
+import { getAdditionalUserInfo, GoogleAuthProvider } from "firebase/auth";
 const Login = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser,LoginWithGoogle } = useContext(AuthContext);
+  const location = useLocation()
+  const navigate = useNavigate();
+  const from = location.state || "/"
+  console.log("location in login page",location);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -19,14 +24,49 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        navigate(from)
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
+  };
 
-    
+  // google login 
+  const handleGoogleLogIn = () => {
+    LoginWithGoogle()
+      .then((result) => {
+        // Google Access Token
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+  
+        // Signed-in user info
+        const user = result.user;
+  
+        console.log("User Info:", user);
+        console.log("Access Token:", token);
+  
+        // Additional user info (optional)
+        const additionalInfo = getAdditionalUserInfo(result);
+        console.log("Additional Info:", additionalInfo);
+  
+        // You can now redirect or update UI based on the logged-in user
+      })
+      .catch((error) => {
+        // Handle errors
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData?.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+  
+        console.error("Error Code:", errorCode);
+        console.error("Error Message:", errorMessage);
+        console.error("Email:", email);
+        console.error("Credential:", credential);
+  
+        // You can show a toast or alert to the user
+      });
   };
   return (
     <div>
@@ -61,7 +101,7 @@ const Login = () => {
                   <div>
                     <h1 className="">
                       Don't have account?
-                      <NavLink className={"p-2 text-red-500"} to={"/register"}>
+                      <NavLink className={"p-2 text-red-500 font-semibold"} to={"/register"}>
                         Register
                       </NavLink>
                     </h1>
@@ -71,12 +111,12 @@ const Login = () => {
                   </button>
                 </fieldset>
               </form>
-              <p className="text-center">Or</p>
+               <div class="divider">OR</div>
               <button
-                
+              onClick={handleGoogleLogIn}
                 className="btn btn-white mt-4"
               >
-                <FcGoogle /> login with google
+                <FcGoogle  /> login with google
               </button>
             </div>
           </div>

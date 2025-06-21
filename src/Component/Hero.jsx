@@ -1,21 +1,36 @@
 import React from "react";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+import banner1 from "../assets/image/banner-image/banner1.png"
+import banner2 from "../assets/image/banner-image/banner2.png"
 
 const Hero = () => {
   return (
-    <div>
-      <div className="hero bg-base-200 min-h-screen">
+    <div style={{backgroundImage:`url()`}}>
+      <div className="hero max-w-7xl mx-auto min-h-96">
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
+          <div className="flex-1">
+            <motion.img
+            src={banner1}
+            animate={{y:[100,150,100]}}
+            transition={{duration:5,repeat:Infinity}}
             className="max-w-sm rounded-lg shadow-2xl"
           />
-          <div>
-            <motion.h1 animate={{rotate:180,transition:{duration:2}}} className="text-5xl font-bold">Latest Jobs!</motion.h1>
+            <motion.img
+            src={banner2}
+            animate={{x:[100,150,100]}}
+            transition={{duration:10, delay:5,repeat:Infinity}}
+            className="max-w-sm rounded-lg shadow-2xl"
+          />
+          </div>
+          <div className="flex-1">
+            <motion.h1 className="text-5xl font-bold">
+              The <span className="text-primary">Easiest Way </span> to Get Your
+              New Job
+            </motion.h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              Each month, more than 3 million job seekers turn to website in
+              their search for work, making over 140,000 applications every
+              single day
             </p>
             <button className="btn btn-primary">Get Started</button>
           </div>

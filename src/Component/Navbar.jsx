@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import jobBox from "../assets/image/jobBox-logo.svg"
 
 const Navbar = () => {
   const { logoutUser, user } = useContext(AuthContext);
@@ -10,16 +11,31 @@ const Navbar = () => {
         console.log("sign out successfully");
       })
       .catch((error) => {
-        console.log("there is a error",error);
+        console.log("there is a error", error);
       });
   };
   const links = (
-    <>
+    <div className="space-x-3">
       <NavLink to={"/"}>Home</NavLink>
-    </>
+      {/* for applicant links. check rols as well  */}
+      {user && (
+        <>
+          <NavLink to={"/myApplication"}>My Application</NavLink>
+        </>
+      )}
+      {/* for recurter. check role as well  */}
+      {user && (
+        <>
+          <NavLink to={"/addJob"}>Add Job</NavLink>
+          <NavLink to={"/myPostedJobs"}>My Posted Jobs</NavLink>
+        </>
+      )}
+    </div>
   );
+ 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="w-11/12 mx-auto">
+      <div className=" navbar">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -46,20 +62,25 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">
+          <img src={jobBox} alt="" />
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
         {user ? (
-          <button className="btn" onClick={handleSignOut}>sign out</button>
+          <button className="btn bg-primary hover:bg-secondary text-white" onClick={handleSignOut}>
+            sign out
+          </button>
         ) : (
-          <NavLink className={"btn "} to={"/register"}>
+          <NavLink className={"btn bg-primary hover:bg-secondary text-white"} to={"/register"}>
             Register
           </NavLink>
         )}
       </div>
+    </div>
     </div>
   );
 };

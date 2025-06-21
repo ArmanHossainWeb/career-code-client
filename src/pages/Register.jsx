@@ -4,9 +4,10 @@ import LottiesRegister from ".././assets/lotties/register.json";
 import { NavLink } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import { FcGoogle } from "react-icons/fc";
+import { getAdditionalUserInfo, GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser,LoginWithGoogle } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -27,6 +28,42 @@ const Register = () => {
         console.log(errorMessage, errorCode);
       });
   };
+  // google login 
+const handleGoogleLogIn = () => {
+  LoginWithGoogle()
+    .then((result) => {
+      // Google Access Token
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+
+      // Signed-in user info
+      const user = result.user;
+
+      console.log("User Info:", user);
+      console.log("Access Token:", token);
+
+      // Additional user info (optional)
+      const additionalInfo = getAdditionalUserInfo(result);
+      console.log("Additional Info:", additionalInfo);
+
+      // You can now redirect or update UI based on the logged-in user
+    })
+    .catch((error) => {
+      // Handle errors
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData?.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+
+      console.error("Error Code:", errorCode);
+      console.error("Error Message:", errorMessage);
+      console.error("Email:", email);
+      console.error("Credential:", credential);
+
+      // You can show a toast or alert to the user
+    });
+};
+
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -60,14 +97,14 @@ const Register = () => {
                   <div>
                     <h1 className="">
                       Already have account?{" "}
-                      <NavLink to={"/login"}>Login</NavLink>
+                      <NavLink className={"text-red-500 font-semibold"} to={"/login"}>Login</NavLink>
                     </h1>
                   </div>
                   <button type="submit" className="btn btn-neutral mt-4">
                     Register
                   </button>
-                  <p className="text-center">Or</p>
-                  <button type="submit" className="btn btn-white mt-4">
+                   <div class="divider">OR</div>
+                  <button onClick={handleGoogleLogIn} type="submit" className="btn btn-white mt-4">
                     <FcGoogle /> login with google
                   </button>
                 </fieldset>
