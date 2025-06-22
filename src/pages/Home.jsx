@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 import Hero from "../Component/Hero";
 import HotJobs from "../Component/HotJobs";
 import MillionsOfJobs from "../Component/millionsOfJobs";
+import Stats from "../Component/Stats";
+import Navbar from "../Component/Navbar";
 
 const Home = () => {
   const jobsPromise = fetch("http://localhost:3000/jobs").then((res) =>
@@ -15,6 +17,7 @@ const Home = () => {
         <HotJobs jobsPromise={jobsPromise}></HotJobs>
       </Suspense>
       <MillionsOfJobs></MillionsOfJobs>
+      <Stats></Stats>
     </div>
   );
 };

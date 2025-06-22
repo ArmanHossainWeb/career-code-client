@@ -5,7 +5,8 @@ import banner2 from "../assets/image/banner-image/banner2.png"
 
 const Hero = () => {
   return (
-    <div style={{backgroundImage:`url()`}}>
+    <div style={{backgroundImage:`url(https://jobbox-nextjs-v4.vercel.app/_next/static/media/bg-banner.04bbd282.svg)`}}>
+      <div className="w-11/12 mx-auto" >
       <div className="hero max-w-7xl mx-auto min-h-96">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="flex-1">
@@ -36,6 +37,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
