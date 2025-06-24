@@ -12,7 +12,7 @@ const JobList = ({ jobsCreatedByPromise }) => {
             {/* head */}
             <thead>
               <tr>
-                <th></th>
+                <th>#</th>
                 <th>Job Title</th>
                 <th>Deadline</th>
                 <th>View Application</th>

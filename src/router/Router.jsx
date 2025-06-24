@@ -12,7 +12,6 @@ import MyApplication from "../pages/MyApplication";
 import AddJob from "../pages/AddJob";
 import MyPostedJobs from "../pages/MyPostedJobs";
 import ViewApplication from "../Component/ViewApplication";
-import { param } from "motion/react-client";
 
 const Router = createBrowserRouter([
   {

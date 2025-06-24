@@ -23,12 +23,19 @@ const ViewApplication = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {
-                applications.map(application => <tr key={application._id}>
-                    <td>1</td>
+              {/* {applications.map((application) => (
+                <tr key={application._id}>
+                  <td>1</td>
+                  <td>{application.applicant}</td>
+                </tr>
+              ))} */}
+              {Array.isArray(applications) &&
+                applications.map((application, index) => (
+                  <tr key={application._id}>
+                    <td>{index + 1}</td>
                     <td>{application.applicant}</td>
-                </tr>)
-              }
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
